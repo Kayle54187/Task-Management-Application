@@ -1,8 +1,8 @@
 {
   "name": "Task-Management-Application",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Task Management Applicaiton Built Using Nest.js",
+  "author": "Christian",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
