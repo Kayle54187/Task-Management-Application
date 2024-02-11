@@ -14,7 +14,11 @@ export class UserRepository extends Repository<User> {
     const user = new User();
     user.username = username;
     user.password = password;
-    await user.save().catch(() => {
+    await user.save().catch((error) => {
+      if (error.code === '23505') {
+        // Code for duplicate username
+        throw new InternalServerErrorException('Username already exists');
+      }
       throw new InternalServerErrorException('Error while saving user');
     });
   }
