@@ -4,6 +4,7 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import {
   ConflictException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { hashPassword } from 'utils/passwords';
@@ -40,7 +41,7 @@ export class UserRepository extends Repository<User> {
     if (user && (await user.validatePassword(password))) {
       return user.username;
     } else {
-      return null;
+      throw new UnauthorizedException('Invalid credentials');
     }
   }
 }
