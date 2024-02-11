@@ -6,29 +6,44 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { Task } from './task.entity';
-import { TasksService } from './tasks.service';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
+import { Task } from './task.entity';
 import { ETaskStatus } from './tasks-status.enum';
+import { TasksService } from './tasks.service';
 
 @Controller('/tasks')
 @ApiTags('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  // @Get()
-  // getTasks(@Query(ValidationPipe) filterDto: GetTasksFilterDto): ITask[] {
-  //   if (Object.keys(filterDto).length) {
-  //     return this.tasksService.getTasksWithFilters(filterDto);
-  //   } else {
-  //     return this.tasksService.getAllTasks();
-  //   }
-  // }
+  @Get()
+  @ApiResponse({
+    type: [Task],
+    description: 'A list of all Tasks',
+  })
+  @ApiQuery({
+    name: 'status',
+    required: false,
+    description: 'Filter by status',
+    enum: ['OPEN', 'IN_PROGRESS', 'DONE'],
+  })
+  @ApiQuery({
+    name: 'search',
+    required: false,
+    description: 'Filter by search',
+  })
+  getTasks(
+    @Query(ValidationPipe) filterDto: GetTasksFilterDto,
+  ): Promise<Task[]> {
+    return this.tasksService.getAllTasks(filterDto);
+  }
 
   @Post()
   @ApiBody({
