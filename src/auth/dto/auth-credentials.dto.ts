@@ -21,7 +21,9 @@ export class AuthCredentialsDto {
   @MinLength(4)
   @MaxLength(20)
   @IsNotEmpty()
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'Password too weak',
+  })
   @ApiProperty({
     description: 'The password of the user',
   })
