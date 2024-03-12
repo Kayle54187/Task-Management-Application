@@ -86,8 +86,8 @@ export class TasksController {
   @ApiResponse({
     type: undefined,
   })
-  deleteTask(@Param('id') id: string) {
-    return this.tasksService.deleteTask(id);
+  deleteTask(@Param('id') id: string, @GetUser() user: User) {
+    return this.tasksService.deleteTask(id, user);
   }
 
   @Patch('/:id/status')
