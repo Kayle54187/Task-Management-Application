@@ -9,6 +9,17 @@ async function bootstrap() {
     .setTitle('Task Management Application')
     .setDescription('The Task Management API description')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        description: `Please enter token`,
+        name: 'Authorization',
+        bearerFormat: 'Bearer',
+        scheme: 'Bearer',
+        type: 'http',
+        in: 'Header',
+      },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

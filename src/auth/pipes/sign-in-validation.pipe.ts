@@ -5,5 +5,6 @@ export class SignInValidationPipe implements PipeTransform {
     if (!value.username || !value.password) {
       throw new BadRequestException('Invalid credentials');
     }
+    return value;
   }
 }

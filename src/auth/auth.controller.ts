@@ -31,7 +31,9 @@ export class AuthController {
     type: AuthCredentialsDto,
     description: 'The username and password of the user',
   })
-  async signIn(@Body() authCredentialsDto: AuthCredentialsDto) {
+  async signIn(
+    @Body() authCredentialsDto: AuthCredentialsDto,
+  ): Promise<{ accessToken: string }> {
     return await this.authService.signIn(authCredentialsDto);
   }
 }

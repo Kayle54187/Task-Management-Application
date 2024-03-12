@@ -7,18 +7,29 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { Task } from './task.entity';
 import { ETaskStatus } from './tasks-status.enum';
 import { TasksService } from './tasks.service';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('/tasks')
+@UseGuards(AuthGuard())
+@ApiBearerAuth('access-token')
 @ApiTags('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
@@ -74,6 +85,10 @@ export class TasksController {
   }
 
   @Patch('/:id/status')
+  @ApiBody({
+    type: UpdateTaskStatusDto,
+    description: 'Update a task status',
+  })
   @ApiResponse({
     type: Task,
     description: 'Update a task status',
