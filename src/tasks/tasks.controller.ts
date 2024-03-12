@@ -78,8 +78,8 @@ export class TasksController {
     type: Task,
     description: 'Get a task by ID',
   })
-  getTaskById(@Param('id') id: string): Promise<Task> {
-    return this.tasksService.getTaskById(id);
+  getTaskById(@Param('id') id: string, @GetUser() user: User): Promise<Task> {
+    return this.tasksService.getTaskById(id, user);
   }
 
   @Delete('/:id/delete')
@@ -102,7 +102,8 @@ export class TasksController {
   updateTaskStatus(
     @Param('id') id: string,
     @Body('status', TaskStatusValidationPipe) status: ETaskStatus,
+    @GetUser() user: User,
   ): Promise<Task> {
-    return this.tasksService.updateTaskStatus({ id, status });
+    return this.tasksService.updateTaskStatus(id, status, user);
   }
 }
