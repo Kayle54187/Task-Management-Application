@@ -1,3 +1,6 @@
+/**
+ * Configuration options for TypeORM module.
+ */
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeORMConfig: TypeOrmModuleOptions = {

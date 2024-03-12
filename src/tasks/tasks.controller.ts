@@ -36,6 +36,12 @@ import { User } from 'src/auth/user.entity';
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
+  /**
+   * Get a list of tasks.
+   * @param filterDto - The filter criteria for tasks.
+   * @param user - The user making the request.
+   * @returns A promise that resolves to an array of tasks.
+   */
   @Get()
   @ApiResponse({
     type: [Task],
@@ -59,6 +65,12 @@ export class TasksController {
     return this.tasksService.getAllTasks(filterDto, user);
   }
 
+  /**
+   * Create a new task.
+   * @param createTaskDto - The data for creating a task.
+   * @param user - The user making the request.
+   * @returns A promise that resolves to the created task.
+   */
   @Post()
   @ApiBody({
     type: CreateTaskDto,
@@ -73,6 +85,12 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto, user);
   }
 
+  /**
+   * Get a task by ID.
+   * @param id - The ID of the task.
+   * @param user - The user making the request.
+   * @returns A promise that resolves to the task with the specified ID.
+   */
   @Get('/:id')
   @ApiResponse({
     type: Task,
@@ -82,6 +100,12 @@ export class TasksController {
     return this.tasksService.getTaskById(id, user);
   }
 
+  /**
+   * Delete a task by ID.
+   * @param id - The ID of the task to delete.
+   * @param user - The user making the request.
+   * @returns A promise that resolves when the task is deleted.
+   */
   @Delete('/:id/delete')
   @ApiResponse({
     type: undefined,
@@ -90,6 +114,13 @@ export class TasksController {
     return this.tasksService.deleteTask(id, user);
   }
 
+  /**
+   * Update the status of a task.
+   * @param id - The ID of the task to update.
+   * @param status - The new status for the task.
+   * @param user - The user making the request.
+   * @returns A promise that resolves to the updated task.
+   */
   @Patch('/:id/status')
   @ApiBody({
     type: UpdateTaskStatusDto,

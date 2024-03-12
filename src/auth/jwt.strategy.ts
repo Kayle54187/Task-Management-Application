@@ -5,6 +5,10 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { IJwtPayload } from './interfaces/jwt-payload.interface';
 import { UserRepository } from './user.repository';
 
+/**
+ * JwtStrategy class that extends PassportStrategy.
+ * This class is responsible for validating JWT tokens and extracting user information from the payload.
+ */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -17,6 +21,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  /**
+   * Validates the JWT payload and retrieves the user information from the database.
+   * @param payload - The JWT payload containing user information.
+   * @returns The user object if found, otherwise throws an UnauthorizedException.
+   */
   async validate(payload: IJwtPayload) {
     const { userName } = payload;
 

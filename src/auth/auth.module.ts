@@ -8,6 +8,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 
+/**
+ * Represents the authentication module of the task management application.
+ *
+ * @module AuthModule
+ */
 @Module({
   imports: [
     JwtModule.register({
@@ -21,6 +26,6 @@ import { JwtStrategy } from './jwt.strategy';
   ],
   controllers: [AuthController],
   providers: [AuthService, UserRepository, JwtStrategy],
-  exports: [JwtStrategy, PassportModule],
+  exports: [JwtStrategy, PassportModule, UserRepository],
 })
 export class AuthModule {}

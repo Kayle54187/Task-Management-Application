@@ -15,6 +15,11 @@ import { SignInValidationPipe } from './pipes/sign-in-validation.pipe';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  /**
+   * Sign up a new user.
+   * @param authCredentialsDto - The username and password of the user.
+   * @returns A promise that resolves to the result of the sign up operation.
+   */
   @Post('/signup')
   @UsePipes(ValidationPipe)
   @ApiBody({
@@ -25,6 +30,11 @@ export class AuthController {
     return await this.authService.signUp(authCredentialsDto);
   }
 
+  /**
+   * Sign in an existing user.
+   * @param authCredentialsDto - The username and password of the user.
+   * @returns A promise that resolves to an object containing the access token.
+   */
   @Post('/signin')
   @UsePipes(SignInValidationPipe)
   @ApiBody({

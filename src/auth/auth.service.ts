@@ -5,6 +5,9 @@ import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { IJwtPayload } from './interfaces/jwt-payload.interface';
 
+/**
+ * Service responsible for handling authentication related operations.
+ */
 @Injectable()
 export class AuthService {
   constructor(
@@ -13,10 +16,21 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  /**
+   * Creates a new user with the provided credentials.
+   * @param authCredentialsDto - The authentication credentials of the user.
+   * @returns The created user.
+   */
   async signUp(authCredentialsDto: AuthCredentialsDto) {
     return await this.userRepository.createUser(authCredentialsDto);
   }
 
+  /**
+   * Authenticates a user with the provided credentials and generates an access token.
+   * @param authCredentialsDto - The authentication credentials of the user.
+   * @returns An object containing the access token.
+   * @throws UnauthorizedException if the credentials are invalid.
+   */
   async signIn(
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<{ accessToken: string }> {
